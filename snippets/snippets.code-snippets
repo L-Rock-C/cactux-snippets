@@ -1,0 +1,131 @@
+{
+  "Cactux: Campo de Texto": {
+    "prefix": "ccampo",
+    "body": [
+      "\\$${1:variavel} = cactux::campo('${2:Label}:', '${3:nome_campo}', \\$_POST[$3], ${5:2});"
+    ],
+    "description": "Cria um input cactux::campo padrão"
+  },
+  "Cactux: Combo de Banco de Dados": {
+    "prefix": "ccombo",
+    "body": [
+      "\\$${1:variavel} = cactux::combo_bd('${2:!Label}:', '${3:nome_campo}', \\$${4:valor_id}, \\$${5:valor_nome}, ${6:4}, '${7:tabela}', '', \" ${8:condicao_sql} \");"
+    ],
+    "description": "Cria um select cactux::combo_bd"
+  },
+  "Cactux: Fieldset Completo": {
+    "prefix": "cfieldset",
+    "body": [
+      "cactux::abre_fieldset('${1:Título do Fieldset}');",
+      "cactux::linha_fieldset(\\$${2:campo1}, \\$${3:campo2});",
+      "cactux::fecha_fieldset();"
+    ],
+    "description": "Estrutura de fieldset com linha"
+  },
+  "Cactux: Linha Fieldset": {
+    "prefix": "clinhafieldset",
+    "body": [
+      "cactux::linha_fieldset(\\$${1:campo1}, \\$${2:campo2}, \\$${3:campo3}, \\$${4:campo4}, \\$${5:campo5});"
+    ],
+    "description": "Estrutura de linha para o fieldset"
+  },
+  "Cactux: Estrutura Index": {
+    "prefix": "cindex",
+    "body": [
+      "function index(){",
+      "",
+      "    cabecalho('${1:Título da Página}');",
+      "",
+      "    cactux::abre_form('');",
+      "",
+      "    \\$${2:campo_busca} = cactux::campo('${3:Busca}:', 'busca_${4:campo}', \\$_POST[busca_${4:campo}], 4);",
+      "",
+      "    \\$buscar = cactux::botao_submit_busca('Buscar', 2, 'index');",
+      "    \\$inserir = cactux::botao('Inserir', 2, 'inserir');",
+      "",
+      "    cactux::abre_fieldset('Filtro de Busca');",
+      "    cactux::linha_fieldset(\\$${2:campo_busca});",
+      "    cactux::linha_fieldset(\\$buscar, \\$inserir, cactux::msg_status());",
+      "    cactux::fecha_fieldset();",
+      "",
+      "    cactux::fecha_form();",
+      "",
+      "    cactux::acao_botao('inserir', 'layout_${5:entidade}');",
+      "",
+      "    \\$cabecalho[] = array('COD', '${6:COLUNA 1}', '', '');",
+      "    \\$cabecalho[] = 'c,e,c,c';",
+      "    \\$cabecalho[] = '5%,,2%,2%';",
+      "",
+      "    \\$sql = selecionar('${7:tabela}', '${7}_tx_status', '!inativo', \" \", 1);",
+      "    \\$busca = grid::gerar_paginacao(\\$sql);",
+      "",
+      "    while(\\$a = carrega_array(\\$busca[0])){",
+      "        \\$modificar = \".icone_modificar(\\$a[${7}_nb_id], 'modifica_${5:entidade}')\";",
+      "        \\$excluir = \".icone_excluir(\\$a[${7}_nb_id], 'exclui_${5:entidade}')\";",
+      "",
+      "        \\$valores[] = array(\\$a[${7}_nb_id], \\$a[${7}_tx_${8:campo}], \\$modificar, \\$excluir);",
+      "    }",
+      "",
+      "    grid::gerar(\\$cabecalho, \\$valores);",
+      "    grid::paginar(\\$busca);",
+      "",
+      "    rodape();",
+      "}"
+    ],
+    "description": "Gera a função index() completa com grid e filtro"
+  },
+  "Cactux: Esqueleto CRUD (Arquivo Completo)": {
+    "prefix": "ccrud",
+    "body": [
+      "",
+      "include 'conecta.php';",
+      "",
+      "function modifica_${1:entidade}(){",
+      "    if(\\$_POST[id] < 0){",
+      "        set_staus('Erro: ID vazio!');",
+      "    }",
+      "",
+      "    global \\$a_mod;",
+      "    \\$a_mod = carregar('${2:tabela}', \\$_POST[id]);",
+      "    ",
+      "    layout_${1:entidade}();",
+      "    exit;",
+      "}",
+      "",
+      "function cadastra_${1:entidade}(){",
+      "    // Lógica de cadastro (Inserir/Atualizar)",
+      "    index();",
+      "    exit;",
+      "}",
+      "",
+      "function layout_${1:entidade}(){",
+      "    global \\$a_mod;",
+      "",
+      "    cabecalho('${3:Título do Layout}');",
+      "    cactux::abre_form('');",
+      "",
+      "    $0",
+      "",
+      "    \\$voltar = cactux::botao('Voltar', 2, 'voltar');",
+      "    \\$inserir = cactux::botao_submit('Gravar', 2, 'cadastra_${1:entidade}', 'id', \\$a_mod[${2}_nb_id]);",
+      "",
+      "    cactux::abre_fieldset('Dados');",
+      "    cactux::linha_fieldset(\\$voltar, \\$inserir);",
+      "    cactux::fecha_fieldset();",
+      "",
+      "    cactux::fecha_form();",
+      "    cactux::acao_botao('voltar', 'index');",
+      "",
+      "    rodape();",
+      "}",
+      "",
+      "function index(){",
+      "    // Use o snippet 'cindex' aqui",
+      "}",
+      "",
+      "controle();",
+      "",
+    ],
+    "description": "Esqueleto completo de um arquivo de cadastro cactux"
+  }
+}
