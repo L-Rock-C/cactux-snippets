@@ -1,5 +1,6 @@
 {
   "name": "cactux-snippets",
+  "publisher": "Lucas Rock",
   "displayName": "cactux-snippets",
   "description": "Snippets para PHP e Cactux",
   "version": "0.0.1",
