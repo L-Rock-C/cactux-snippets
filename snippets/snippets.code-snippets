@@ -127,5 +127,12 @@
       "",
     ],
     "description": "Esqueleto completo de um arquivo de cadastro cactux"
+  },
+  "Cactux: Função Selecionar": {
+    "prefix": "selec",
+    "body": [
+      "selecionar('${1:tabela1,tabela2}', '${2:campos}', '${3:valores}', '${4:extra (ex: ORDER BY)}');"
+    ],
+    "description": "selecionar($tabelas, $campos, $valores, $extra)\n\nRealiza uma query no banco ligando as tabelas dadas e trata quanto a erro."
   }
 }
