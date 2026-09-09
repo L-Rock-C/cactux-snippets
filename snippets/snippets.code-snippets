@@ -128,11 +128,62 @@
     ],
     "description": "Esqueleto completo de um arquivo de cadastro cactux"
   },
-  "Cactux: Função Selecionar": {
+  "Cactux BD: Selecionar": {
     "prefix": "selec",
     "body": [
-      "selecionar('${1:tabela1,tabela2}', '${2:campos}', '${3:valores}', '${4:extra (ex: ORDER BY)}');"
+      "\\$${1:sql} = selecionar('${2:tabelas}', '${3:campos}', '${4:valores}', '${5:extra}', ${6:0}, ${7:0});"
     ],
-    "description": "selecionar($tabelas, $campos, $valores, $extra)\n\nRealiza uma query no banco ligando as tabelas dadas e trata quanto a erro."
+    "description": "selecionar($tabelas, $campos, $valores, $extra, $query, $DEBUG)\nRealiza uma query ligando as tabelas e trata erros."
+  },
+
+  "Cactux BD: Modificar": {
+    "prefix": "modifica",
+    "body": [
+      "\\$${1:a_mod} = carregar('${2:tabela}', \\$${3:_POST[id]}, '${4:campos}', '${5:valores}', '${6:extra}', ${7:0});"
+    ],
+    "description": "carregar / modificar($tabelas, $id, $campos, $valores, $extra, $DEBUG)\nCarrega os campos de um registro para edição."
+  },
+
+  "Cactux BD: Atualizar": {
+    "prefix": "atualiza",
+    "body": [
+      "\\$campos = array(${1:campo1}, ${2:campo2});",
+      "\\$valores = array(${3:valor1}, ${4:valor2});",
+      "atualizar('${5:tabela}', \\$campos, \\$valores, \\$${6:_POST[id]}, '', '', '${7:extra}', ${8:0});"
+    ],
+    "description": "atualizar($tabela, $CAMPO, $VALOR, $id, $CAMPO2, $VALOR2, $EXTRA, $debug)\nAtualiza os registros no banco."
+  },
+  "Cactux BD: Inserir": {
+    "prefix": "insere",
+    "body": [
+      "\\$campos = array(${1:campo1}, ${2:campo2});",
+      "\\$valores = array(${3:valor1}, ${4:valor2});",
+      "inserir('${5:tabela}', \\$campos, \\$valores, ${6:1}, ${7:0});"
+    ],
+    "description": "inserir($tabela, $CAMPO, $VALOR, $existe, $debug)\nInsere uma nova linha e gera log."
+  },
+
+  "Cactux Form: Campo Padrão": {
+    "prefix": "ccampo",
+    "body": [
+      "\\$${1:variavel} = cactux::campo('${2:Label}:', '${3:nome_campo}', \\$${4:valor_banco}, ${5:2}, '${6:extra}', '${7:lado}');"
+    ],
+    "description": "cactux::campo($item, $nome, $valor, $tamanho, $extra, $lado)\nRenderiza um input de texto."
+  },
+
+  "Cactux Form: Combo BD Completo": {
+    "prefix": "ccombo",
+    "body": [
+      "\\$${1:variavel} = cactux::combo_bd('${2:!Label}:', '${3:nome_input}', \\$${4:valor_selecionado_id}, \\$${5:valor_selecionado_nome}, ${6:4}, '${7:tabela_alvo}', '${8:extra}', '${9:campos_ordenacao}', '${10:coluna_exibida}', '${11:200}', \" ${12:extrasql} \");"
+    ],
+    "description": "cactux::combo_bd($item, $nome, $valor1, $valor2, $tamanho, $tabela, $extra, $campos, $nome_campo, $lim_nome, $extrasql)\nRenderiza um <select> automático do banco."
+  },
+
+  "Cactux Form: Botão Submit": {
+    "prefix": "cbotao_submit",
+    "body": [
+      "\\$${1:inserir} = cactux::botao_submit('${2:Gravar}', ${3:2}, '${4:acao_post}', '${5:campos_hidden}', \\$${6:valores_hidden}, '${7:extra}');"
+    ],
+    "description": "cactux::botao_submit($submit, $tamanho, $acao, $campos, $valores, $extra)\nGera um botão de submit com campos ocultos (hidden)."
   }
 }

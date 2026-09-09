@@ -3,7 +3,7 @@
   "publisher": "lucasrock",
   "displayName": "cactux-snippets",
   "description": "Snippets para PHP e Cactux",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.134.0"
   },
